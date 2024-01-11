@@ -103,7 +103,7 @@ header {
 .devis {
 	background-color: var(--secondary-color);
 }
-
+/*ajout carroussel dans banner*/
 #banner {
 	display: flex;
 	flex-direction: column;
