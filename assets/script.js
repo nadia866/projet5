@@ -54,3 +54,36 @@ function updateCarousel(index, direction) {
 
     console.log(`Clic sur la flèche ${direction}`);
 }
+//Étape 4 : Modifiez le slide au clic sur le bouton, 
+// Variable pour suivre l'état du chargement initial
+let initialLoad = true;
+
+// Gestionnaire d'événement pour la flèche gauche
+arrowLeft.addEventListener('click', function () {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    console.log("Index après clic gauche :", currentIndex);
+    updateCarousel(currentIndex, 'left');
+    updateDots(currentIndex);
+    // Si c'est le chargement initial, mettez la variable à false après la première interaction
+    if (initialLoad) {
+        initialLoad = false;
+    }
+});
+
+// Gestionnaire d'événement pour la flèche droite
+arrowRight.addEventListener('click', function () {
+    currentIndex = (currentIndex + 1) % slides.length;
+    console.log("Index après clic droite :", currentIndex);
+    updateCarousel(currentIndex, 'right');
+    updateDots(currentIndex);
+    // Si c'est le chargement initial, mettez la variable à false après la première interaction
+    if (initialLoad) {
+        initialLoad = false;
+    }
+});
+
+// Si c'est le chargement initial, appelez les fonctions une fois
+if (initialLoad) {
+    updateCarousel(currentIndex, 'démarrage');
+    updateDots(currentIndex);
+}
