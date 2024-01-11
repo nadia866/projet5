@@ -16,30 +16,41 @@ const slides = [
 		"tagLine": "Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-//Étape 2 : Ajoutez des Event Listeners sur les flèches 
+// Étape 2 : Ajoutez des Event Listeners sur les flèches
 const bannerImg = document.querySelector('.banner-img');
 const arrowLeft = document.querySelector('.arrow_left');
 const arrowRight = document.querySelector('.arrow_right');
-const dots = document.querySelectorAll('.dot'); // Sélections de tous les points
+const dots = document.querySelectorAll('.dot'); // Sélectionnez tous les points
 
 let currentIndex = 0;
 
 // Étape 3 : Ajoutez des bullet points au slider
+// Fonction pour mettre à jour les points indicateurs
 function updateDots(index) {
     dots.forEach((dot, i) => {
-        dot.classList.toggle('dot_selected', i === index);
+        if (i === index) {
+            dot.classList.add('dot_selected'); // Ajoute la classe pour le point actuel
+        } else {
+            dot.classList.remove('dot_selected'); // Supprime la classe pour les autres points
+        }
     });
 }
+
 // Fonction pour mettre à jour le carrousel
 function updateCarousel(index, direction) {
-    currentIndex = (index + slides.length) % slides.length;
+    // Correction du bug pour la première et la dernière image
+    if (currentIndex === -1 && direction === 'left') {
+        currentIndex = slides.length - 1;
+    } else if (currentIndex === slides.length && direction === 'right') {
+        currentIndex = 0;
+    }
 
-    const { image, tagLine } = slides[currentIndex];
+    const currentSlide = slides[currentIndex];
 
-    bannerImg.src = `assets/images/slideshow/${image}`;
+    // Mettre à jour l'image, le texte et les points indicateurs
+    bannerImg.src = `assets/images/slideshow/${currentSlide.image}`;
     bannerImg.alt = `Slide ${currentIndex + 1}`;
-    document.querySelector('p').innerHTML = tagLine;
+    document.querySelector('p').innerHTML = currentSlide.tagLine;
 
     console.log(`Clic sur la flèche ${direction}`);
 }
-
