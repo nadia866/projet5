@@ -1,3 +1,4 @@
+// Un tableau d'objets représentant chaque diapositive du carrousel. Chaque objet a une propriété "image" pour le nom du fichier image et une propriété "tagLine" pour le texte associé.
 const slides = [
 	{
 		"image": "slide1.jpg",
@@ -20,12 +21,12 @@ const slides = [
 const bannerImg = document.querySelector('.banner-img');
 const arrowLeft = document.querySelector('.arrow_left');
 const arrowRight = document.querySelector('.arrow_right');
-const dots = document.querySelectorAll('.dot'); // Sélectionnez tous les points
+const dots = document.querySelectorAll('.dot'); // Sélectionne tous les points
 
-let currentIndex = 0;
+let currentIndex = 0;//Un indice pour suivre la diapositive actuelle dans le tableau slides.
 
 // Étape 3 : Ajoutez des bullet points au slider
-// Fonction pour mettre à jour les points indicateurs
+//Une fonction qui met à jour les points indicateurs en ajoutant la classe 'dot_selected' au point correspondant à l'index actuel et en supprimant cette classe des autres points.
 function updateDots(index) {
     dots.forEach((dot, i) => {
         if (i === index) {
@@ -36,7 +37,7 @@ function updateDots(index) {
     });
 }
 
-// Fonction pour mettre à jour le carrousel
+// Une fonction qui met à jour le contenu du carrousel en fonction de l'index et de la direction. Elle corrige également un bug pour la première et la dernière image du carrousel.
 function updateCarousel(index, direction) {
     // Correction du bug pour la première et la dernière image
     if (currentIndex === -1 && direction === 'left') {
@@ -55,16 +56,17 @@ function updateCarousel(index, direction) {
     console.log(`Clic sur la flèche ${direction}`);
 }
 //Étape 4 : Modifiez le slide au clic sur le bouton, 
-// Variable pour suivre l'état du chargement initial
+//Une variable pour suivre l'état du chargement initial. Elle est utilisée pour n'exécuter certaines opérations qu'une seule fois
 let initialLoad = true;
 
 // Gestionnaire d'événement pour la flèche gauche
+//Lorsqu'elle est cliquée, met à jour l'index, appelle updateCarousel et updateDots, puis met à jour la variable initialLoad
 arrowLeft.addEventListener('click', function () {
     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
     console.log("Index après clic gauche :", currentIndex);
     updateCarousel(currentIndex, 'left');
     updateDots(currentIndex);
-    // Si c'est le chargement initial, mettez la variable à false après la première interaction
+// Si c'est la première fois que la page est chargée, les fonctions updateCarousel et updateDots sont appelées avec l'index initial, et la variable initialLoad est mise à false.
     if (initialLoad) {
         initialLoad = false;
     }
